@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li><a href="about.html">О центре</a></li>
+            <li><a href="news.html">Новости</a></li>
+            
+            <!-- Проекты с выпадающим списком -->
+            <li class="dropdown">
+                <a href="#projects">Проекты</a>
+                <ul class="dropdown-menu">
+                    <li><a href="#project-bvb">Билет в будущее</a></li>
+                    <li><a href="#project-sdz">Содейсвие занятости</a></li>
+                    <li><a href="#project-bck">Базовый центр карьеры</a></li>
+                </ul>
+            </li>
+            
+            <li><a href="events.html">Мероприятия</a></li>
+        </ul>
+    </nav>
+
+    {% block body %}{% endblock %} 
+    
+    <footer class="footer">
+        <div class="footer-inner">
+            <h3>ЦОПП Крым</h3>
+            <p>Центр опережающей профессиональной подготовки Республики Крым</p>
+            <p>Email: info@copp82.ru | Тел: +7 (000) 000-00-00</p>
+            <p class="copyright">© 2026 ЦОПП Крым</p>
+        </div>
+    </footer>
+
+</body>
+</html>

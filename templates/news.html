@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Новости
+{% endblock %}
+
+{% block body %}
+    <h1>News</h1>
+
+    {% for el in news %}
+        <h2>{{el.title}}</h2>
+        <p>P{{el.intro}}</p>
+        <p>{{el.date.date()}}</p>
+    {% endfor %}
+
+{% endblock %}

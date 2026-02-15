@@ -1,0 +1,277 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    background: #F5F5F7;
+    /* 212121 светтло серый
+    121214 темный  */
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
+/* NAVBAR */
+.navbar {
+    background: white;
+    padding: 45px 100px;
+    /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.322); */
+}
+
+.nav-links {
+    color: black;
+    list-style: none;
+    display: flex;
+    justify-content: center; /* ВАЖНО */
+    gap: 25px;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+.nav-links li {
+    position: relative; /* для выпадающих списков */
+}
+
+.nav-links a {
+    font-size: 22px;
+    color: #121214;
+    text-decoration: none;
+    transition: all 0.3s ease; /* плавный переход для всех свойств */
+}
+
+/* Hover для обычных ссылок */
+.nav-links a:hover {
+    transform: scale(1.3); /* немного увеличиваем текст */
+    color: #0071E3;
+}
+
+/* Скрываем выпадающий список по умолчанию */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%; /* прямо под родителем */
+    left: 0;
+    background-color: white;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.425);
+    min-width: 180px;
+    z-index: 1000;
+    border-radius: 10px;
+}
+
+/* Ссылки внутри выпадающего меню */
+.dropdown-menu li a {
+    padding: 10px 15px;
+    display: block;
+    color: #121214;
+    text-decoration: none;
+    font-size: 20px;
+    transition: all 0.1s ease;
+}
+
+/* Hover для ссылок внутри dropdown */
+.dropdown-menu li a:hover {
+   
+    transform: scale(1.05);
+    color: #14CE75;
+}
+
+/* Появление меню при hover на родительский li */
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+
+
+.content-1 {
+    display: flex;               /* горизонтальный flex-контейнер */
+    justify-content: center;     /* центрируем по горизонтали */
+    align-items: center;         /* центрируем по вертикали */
+    width: 80%;                  /* 80% ширины экрана */
+    min-height: 400px;           /* пример высоты */
+    box-sizing: border-box;
+    padding: 0 20%;              /* отступы по бокам */
+    gap: 20px;                   /* расстояние между блоками */
+    margin: 0 auto;              /* центрирование контейнера на странице */
+}
+
+.explanation {
+    color: #1D1D1F;
+    flex: 1;                     /* занимает доступное пространство */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;     /* вертикальное центрирование текста */
+    align-items: center;         /* горизонтальное центрирование текста */
+    text-align: center;          /* текст по центру */
+}
+
+.explanation h1 {
+    color: #1D1D1F;
+}
+
+.explanation, .explanation p {
+    font-size: 24px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    color: #1D1D1F;
+}
+/* Слоган 
+.slogan {
+    color: white;
+    flex: 0 0 45%;                фиксированная ширина 30% контейнера 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;          центрируем текст слогана 
+    text-align: center;
+}
+*/
+.for_all {
+    display: flex;               /* горизонтальное расположение блоков */
+    justify-content: space-between; /* равномерное расстояние между блоками */
+    padding: 0 20%;              /* отступы по бокам */
+    gap: 20px;                   /* расстояние между блоками */
+    box-sizing: border-box;
+}
+
+.for_all > div {
+    flex: 1;                     /* все блоки одинаковой ширины */
+    min-width: 0;                /* чтобы текст не вылазил */
+    background-color: white;  /* для примера */
+    color: #1D1D1F;
+    display: flex;               /* flex внутри блока */
+    flex-direction: column;      /* вертикально располагаем h1 и p */
+    justify-content: center;     /* вертикальное центрирование */
+    align-items: center;         /* горизонтальное центрирование */
+    text-align: center;          /* текст по центру */
+    padding: 20px;
+    box-sizing: border-box;
+    height: 250px;   
+    /* Лёгкая тень */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+
+    /* Плавный переход при hover */
+    transition: all 0.3s ease;            /* примерная высота */
+}
+/* При наведении увеличиваем тень и слегка поднимаем блок */
+.for_all > div:hover {
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.315);
+    transform: translateY(-3px); /* лёгкое "поднятие" */
+}
+.for_all > div:hover h1 {
+    color: #0071E3; /* например, золотой */
+    transition: color 0.3s ease; /* плавный переход цвета */
+    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.1); /* тонкая обводка текста */
+}
+
+
+
+
+
+.projects {
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;        /* ВЕРТИКАЛЬНО */
+    align-items: center;           /* центрируем блоки */
+    padding: 0 20%;                /* отступы по бокам как в for_all */
+    gap: 20px;                     /* расстояние между блоками */
+    box-sizing: border-box;
+}
+
+.projects > div {
+    width: 100%;                   /* внутри 20% padding будет выглядеть как 80% */
+    background-color: white;
+    color: #1D1D1F;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;       /* вертикальное центрирование */
+    align-items: flex-start;   /* ⬅ прижимаем содержимое влево */
+    text-align: left;            /* текст по центру */
+    padding: 40px;
+    box-sizing: border-box;
+    min-height: 250px;
+    font-size: 25px;
+    /* Лёгкая тень */
+    /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
+    border-radius: 10px;
+
+    /* Плавный переход */
+    transition: all 0.3s ease;
+}
+
+/* Hover эффект */
+.projects > div:hover {
+    box-shadow: 0 6px 13px #1d1d1f2f;
+
+}
+
+.projects > div:hover h2 {
+    /* color: #14CE75; */
+    transition: color 0.3s ease;
+}
+.projects hr {
+    width: 100%;
+    border: none;
+    height: 1px;
+    background-color: #14CE75;
+    margin: 10px 0;
+}
+
+.project-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 25px;
+    background-color: #1D1D1F;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+/* Hover эффект */
+.project-btn:hover {
+    background-color: #14CE75;
+    color: #1D1D1F;
+    box-shadow: 0 4px 10px rgba(0, 113, 227, 0.3);
+}
+
+
+
+
+
+
+
+
+.footer {
+    display: flex;
+    justify-content: center;   /* центрируем по горизонтали */
+    margin-top: 60px;
+}
+
+.footer-inner {
+    background-color: white;
+    width: 100%;
+    padding: 40px 20px;
+    text-align: center;
+    border-radius: 8px; /* немного аккуратности */
+}
+
+.footer-inner p {
+    margin: 8px 0;
+}
+
+.copyright {
+    margin-top: 20px;
+    font-size: 13px;
+    opacity: 0.8;
+}

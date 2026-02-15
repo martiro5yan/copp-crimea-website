@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Главная страница
+{% endblock %}
+
+{% block body %}
+    <form method="post">
+        <input type="text" name="title" placeholder="Название"><br>
+        <textarea name="intro" id="intro" placeholder="Анонс"></textarea>></textarea><br>
+        <textarea name="text" id="text" placeholder="Основной текст""></textarea>></textarea><br>
+        <input type="submit" class="btn" value="Отправить">
+    </form> 
+{% endblock %}
