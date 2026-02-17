@@ -164,11 +164,14 @@ body {
 }
 /* При наведении увеличиваем тень и слегка поднимаем блок */
 .for_all > div:hover {
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.315);
+    background-color: #0071E3;
+    color: white;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.623);
     transform: translateY(-3px); /* лёгкое "поднятие" */
+    
 }
 .for_all > div:hover h1 {
-    color: #0071E3; /* например, золотой */
+    color: white; /* например, золотой */
     transition: color 0.3s ease; /* плавный переход цвета */
     -webkit-text-stroke: 1px rgba(0, 0, 0, 0.1); /* тонкая обводка текста */
 }
@@ -206,6 +209,17 @@ body {
 
     /* Плавный переход */
     transition: all 0.3s ease;
+}
+
+.project-logo {
+    align-self: center;   /* центрирование во flex */
+    max-width: 150px;     /* увеличили */
+    width: 100%;          /* адаптивность */
+    height: auto;         /* сохраняет пропорции */
+    margin-bottom: 20px;
+}
+#project-sdz .project-logo {
+    max-width: 500px;   /* увеличенный размер только для СЗД */
 }
 
 /* Hover эффект */
