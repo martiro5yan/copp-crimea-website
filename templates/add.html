@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Добавить запись</title>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        input, textarea { margin: 10px 0; padding: 5px; width: 300px; }
+    </style>
+</head>
+<body>
+    <h1>Добавить запись</h1>
+    
+    <form method="post" enctype="multipart/form-data">
+        <div>
+            <label>Название:</label><br>
+            <input type="text" name="name" required>
+        </div>
+        
+        <div>
+            <label>Картинка:</label><br>
+            <input type="file" name="image" accept="image/*" required>
+        </div>
+        
+        <button type="submit">Сохранить</button>
+    </form>
+    
+    <br>
+    <a href="/">Назад</a>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Главная</title>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .item { 
+            border: 1px solid #ddd; 
+            padding: 10px; 
+            margin: 10px 0;
+            display: inline-block;
+            width: 200px;
+        }
+        img { max-width: 100%; height: 150px; object-fit: cover; }
+    </style>
+</head>
+<body>
+    <h1>Все записи</h1>
+    
+    <a href="/add">➕ Добавить запись</a>
+    <br><br>
+    
+    {% for item in items %}
+    <div class="item">
+        {% if item.image %}
+        <img src="{{ url_for('static', filename='uploads/' + item.image) }}">
+        {% endif %}
+        <h3>{{ item.name }}</h3>
+    </div>
+    {% else %}
+    <p>Пока нет записей</p>
+    {% endfor %}
+</body>
+</html>

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/posts.css') }}">
+{% endblock %}
+
+{% block title %}
+{{ article.title }}
+{% endblock %}
+
+{% block body %}
+<div class="container">
+
+    <h1 class="post-title">{{ article.title }}</h1>
+
+    <p class="post-date text-muted">
+        Опубликовано: {{ article.date.strftime('%d.%m.%Y %H:%M') }}
+    </p>
+
+    <div class="post-content">
+        <p>{{ article.text }}</p>
+    </div>
+
+    {% if article.images %}
+    <div class="slider">
+        <button class="slider-btn prev">&#10094;</button>
+
+        <div class="slider-track">
+            {% for img in article.images %}
+                <div class="slide">
+                    <img src="{{ url_for('static', filename=img.image_path) }}" alt="">
+                </div>
+            {% endfor %}
+        </div>
+
+        <button class="slider-btn next">&#10095;</button>
+    </div>
+    {% endif %}
+
+</div>
+
+<script>
+const track = document.querySelector('.slider-track');
+const slides = document.querySelectorAll('.slide');
+const prevBtn = document.querySelector('.prev');
+const nextBtn = document.querySelector('.next');
+
+let index = 0;
+
+function updateSlider() {
+    track.style.transform = `translateX(-${index * 100}%)`;
+}
+
+nextBtn.addEventListener('click', () => {
+    index = (index + 1) % slides.length;
+    updateSlider();
+});
+
+prevBtn.addEventListener('click', () => {
+    index = (index - 1 + slides.length) % slides.length;
+    updateSlider();
+});
+</script>
+{% endblock %}

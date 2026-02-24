@@ -1,0 +1,65 @@
+.container {
+    max-width: 900px; /* общий контейнер */
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Текст статьи */
+.post-title {
+    margin-top: 30px;
+}
+
+.post-content {
+    margin: 22px auto;
+    text-align: left;
+    max-width: 70%; /* текст занимает 70% ширины контейнера */
+    line-height: 1.6;
+}
+
+/* Слайдер */
+.slider {
+    position: relative;
+    max-width: 100%;
+    margin: 30px auto 50px; /* центрируем слайдер под текстом */
+    overflow: hidden;
+}
+
+.slider-track {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.slide {
+    min-width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center; /* центрируем картинку в слайде */
+}
+
+.slide img {
+    height: 400px; /* пример высоты */
+    width: auto;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+/* Кнопки */
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 20px;
+    border-radius: 5px;
+}
+
+.prev { left: 10px; }
+.next { right: 10px; }
+
+.slider-btn:hover {
+    background: rgba(0,0,0,0.8);
+}

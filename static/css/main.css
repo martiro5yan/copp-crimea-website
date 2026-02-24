@@ -21,7 +21,12 @@ body {
 .navbar {
     background: white;
     padding: 45px 100px;
+    justify-content: space-between; /* логотип слева, меню справа */
     /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.322); */
+}
+/* Логотип */
+.logo img {
+    height: 60px; /* регулируй размер */
 }
 
 .nav-links {
@@ -156,7 +161,7 @@ body {
     box-sizing: border-box;
     height: 250px;   
     /* Лёгкая тень */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
     border-radius: 10px;
 
     /* Плавный переход при hover */

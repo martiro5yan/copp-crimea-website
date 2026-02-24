@@ -5,10 +5,19 @@
 {% endblock %}
 
 {% block body %}
-    <form method="post">
-        <input type="text" name="title" placeholder="Название"><br>
-        <textarea name="intro" id="intro" placeholder="Анонс"></textarea>></textarea><br>
-        <textarea name="text" id="text" placeholder="Основной текст""></textarea>></textarea><br>
-        <input type="submit" class="btn" value="Отправить">
-    </form> 
+    <form method="POST" enctype="multipart/form-data">
+        <input type="text" name="title" placeholder="Заголовок" required><br><br>
+
+        <textarea name="intro" placeholder="Короткое описание" maxlength="500" required></textarea>
+
+        <textarea name="text" placeholder="Текст новости" required></textarea><br><br>
+
+        <label>Картинка анонса:</label>
+        <input type="file" name="preview_image"><br><br>
+
+        <label>Картинки статьи:</label>
+        <input type="file" name="images" multiple><br><br>
+
+    <button type="submit">Создать новость</button>
+</form>
 {% endblock %}

@@ -1,16 +1,33 @@
 {% extends 'base.html' %}
-
-{% block title %}
-Новости
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/news.css') }}">
 {% endblock %}
 
-{% block body %}
-    <h1>News</h1>
+{% block title %}Новости{% endblock %}
 
-    {% for el in news %}
-        <h2>{{el.title}}</h2>
-        <p>P{{el.intro}}</p>
-        <p>{{el.date.date()}}</p>
+{% block body %}
+<h1 class="page-title">Новости ЦОПП Республики Крым</h1>
+
+<div class="news-grid">
+    {% for article in news %}
+    <a href="{{ url_for('news_detail', id=article.id) }}" class="news-card-link">
+        <div class="news-card">
+
+            {% if article.preview_image %}
+            <div class="news-image">
+                <img src="{{ url_for('static', filename=article.preview_image) }}" alt="">
+            </div>
+            {% endif %}
+
+            <div class="news-content">
+                <h2>{{ article.title }}</h2>
+                <p class="news-intro">{{ article.intro }}</p>
+            
+            </div>
+            <p class="news-date">{{ article.date.strftime('%d.%m.%Y') }}</p>
+        </div>
+    </a>
     {% endfor %}
+</div>
 
 {% endblock %}
