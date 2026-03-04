@@ -1,0 +1,72 @@
+body {
+    display: flex;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    height: 100vh;
+}
+.corner-image {
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    width: 15%;
+    opacity: 0.9;
+    pointer-events: none; /* чтобы не мешала кликам */
+    z-index: 999;
+}
+
+/* Левая панель */
+#menu {
+    width: 200px;
+    background: white;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 10px;
+    box-sizing: border-box;
+}
+
+/* Верхняя зона под логотип */
+#menu .logo {
+    height: 80px;         /* место для логотипа */
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#menu .logo img {
+    max-height: 120%;
+    max-width: 120%;
+}
+
+
+/* Кнопки меню */
+.logout-btn,
+.menu-btn {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    background: #00354B;
+    border: 0px solid white;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+}
+.logout-btn,
+.menu-btn:hover {
+    /* transform: translateY(-2px); */
+    background-color: #147DBA;
+}
+
+
+
+/* Центральная зона контента */
+#content {
+    text-align: center;
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: #F5F5F7;
+}

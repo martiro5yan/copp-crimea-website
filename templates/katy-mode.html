@@ -1,13 +1,73 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>Админка</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/katy-mode.css') }}">
+<title>Katy Mode</title>
 </head>
 <body>
-    <h1>Добро пожаловать, администратор!</h1>
-    <p>Здесь можно добавлять новости, редактировать статьи и управлять сайтом.</p>
 
-    <a href="{{ url_for('katy_mode.logout') }}">Выйти</a>
+<div id="menu">
+    <div class="logo">
+        <img src="/static/images/ЦОПП КР голубой.png" alt="Логотип">
+    </div>
+
+    <button class="menu-btn" onclick="loadModule('create-news')">Создать новость</button>
+    <button class="menu-btn" onclick="loadModule('news')">Календарь</button>
+    <button class="menu-btn" onclick="loadModule('news')">Атлас профессий</button>
+    <button class="menu-btn" onclick="loadModule('news')">Новости</button>
+    <!-- <button class="menu-btn" onclick="loadModule('users')">Пользователи</button>
+    <button class="menu-btn" onclick="loadModule('settings')">Настройки</button> -->
+    <form action="/katy-mode/logout" method="POST" style="margin-top:20px;">
+        <button type="submit" class="logout-btn">Выход</button>
+    </form>
+</div>
+
+<div id="content">
+  <h2>Добро пожаловать в админку!</h2>
+  <p>Выберите модуль слева, чтобы начать.</p>
+</div>
+
+<script>
+// Функция подгрузки модуля
+function loadModule(name) {
+    fetch(`/katy-mode/module/${name}`)
+    .then(r => r.text())
+    .then(html => {
+        document.getElementById('content').innerHTML = html;
+        initForms(); // инициализируем формы после подгрузки
+    });
+}
+
+// Инициализация форм после подгрузки модуля
+function initForms() {
+    const form = document.querySelector('#create-news-form');
+    if (form) {
+        form.addEventListener('submit', function(e){
+            e.preventDefault();
+            const data = new FormData(this);
+            fetch('/katy-mode/create-news', {
+                method: 'POST',
+                body: data,
+                headers: {'X-Requested-With': 'XMLHttpRequest'}
+            })
+            .then(r => r.text())
+            .then(msg => {
+                document.getElementById('create-news-result').innerHTML = `<p style="color:green;">${msg}</p>`;
+                this.reset();
+                console.log("Новость успешно создана!");
+            })
+            .catch(err => {
+                document.getElementById('create-news-result').innerHTML = `<p style="color:red;">Ошибка: ${err}</p>`;
+                console.error(err);
+            });
+        });
+    }
+}
+
+// Загружаем по умолчанию пустой контент
+
+</script>
+<img src="/static/images/Паттерн.png" class="corner-image" alt="">
 </body>
 </html>
