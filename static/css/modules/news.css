@@ -1,0 +1,72 @@
+/* =========================
+   news.css — стили для новостей
+========================= */
+/* Сетка новостей */
+.news-grid {
+    width: 800px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Карточка новости */
+.news-card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: white;
+    overflow: hidden;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+    transition: box-shadow 0.3s, transform 0.2s;
+}
+.news-card.editing,
+.news-card:hover {
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
+}
+
+/* Контент новости */
+.news-content { padding: 15px; }
+.news-content h2 { margin-bottom: 10px; font-size: 20px; }
+.news-content p { margin-bottom: 6px; font-size: 14px; color: #555; }
+.news-date { color: #999; font-size: 12px; }
+
+/* Кнопки действий */
+.news-actions { padding: 15px; display: flex; gap: 10px; }
+.edit-btn { background: #00354B; color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; }
+.edit-btn:hover { background: #147DBA; }
+.delete-btn { background: rgba(255, 0, 0, 0.438); color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; }
+.delete-btn:hover { background: red; }
+
+/* Форма редактирования */
+.edit-form {
+    display: none;
+    padding: 15px;
+    border-top: 1px solid #eee;
+    background: #fafafa;
+    border-radius: 0 0 10px 10px;
+}
+.edit-form input,
+.edit-form textarea,
+.edit-form input[type="file"] {
+    width: 700px;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+/* Поиск новостей */
+.news-search {
+    width: 700px;
+    margin: 0 auto 20px;
+    text-align: center;
+}
+.news-search input {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}

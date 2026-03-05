@@ -1,36 +1,19 @@
-<form id="create-news-form" enctype="multipart/form-data">
-    <input type="text" name="title" placeholder="Заголовок" required><br><br>
-    <textarea name="intro" placeholder="Короткое описание" required></textarea><br><br>
-    <textarea name="text" placeholder="Текст новости" required></textarea><br><br>
+
+<h1>Создание новости</h3>
+<form id="create-news-form" enctype="multipart/form-data" class="create-news-form">
+    <input maxlength="100" type="text" name="title" placeholder="Заголовок (100 cимволов)" required>
+    <textarea maxlength="300" name="intro" placeholder="Короткое описание (300 символов)" required></textarea>
+    <textarea maxlength="500" name="text" placeholder="Текст новости (500 символов)" required></textarea>
+
     <label>Картинка анонса:</label>
-    <input type="file" name="preview_image"><br><br>
+    <input type="file" name="preview_image">
+
     <label>Доп. картинки:</label>
-    <input type="file" name="images" multiple><br><br>
-    <button type="submit">Создать новость</button>
+    <input type="file" name="images" multiple>
+
+    <button type="submit" class="save-btn">Обупликовать</button>
 </form>
 
-<div id="create-news-result"></div>
 
-<script>
-document.getElementById('create-news-form').addEventListener('submit', function(e){
-    e.preventDefault(); // предотвращаем стандартную отправку
 
-    const formData = new FormData(this);
 
-    fetch('/katy-mode/create-news', {   // обязательно указываем правильный URL
-        method: 'POST',
-        body: formData,
-        headers: {'X-Requested-With': 'XMLHttpRequest'}
-    })
-    .then(res => res.text())
-    .then(msg => {
-        document.getElementById('create-news-result').innerHTML = `<p style="color:green;">${msg}</p>`;
-        this.reset();
-        console.log("Новость успешно создана!");
-    })
-    .catch(err => {
-        document.getElementById('create-news-result').innerHTML = `<p style="color:red;">Ошибка: ${err}</p>`;
-        console.error(err);
-    });
-});
-</script>

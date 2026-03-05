@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/katy-mode.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/modules/news.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/modules/create-news.css') }}">
 <title>Katy Mode</title>
 </head>
 <body>
@@ -11,11 +13,11 @@
     <div class="logo">
         <img src="/static/images/ЦОПП КР голубой.png" alt="Логотип">
     </div>
-
+    <button class="menu-btn" onclick="loadModule('news')">Новости</button>
     <button class="menu-btn" onclick="loadModule('create-news')">Создать новость</button>
     <button class="menu-btn" onclick="loadModule('news')">Календарь</button>
     <button class="menu-btn" onclick="loadModule('news')">Атлас профессий</button>
-    <button class="menu-btn" onclick="loadModule('news')">Новости</button>
+    
     <!-- <button class="menu-btn" onclick="loadModule('users')">Пользователи</button>
     <button class="menu-btn" onclick="loadModule('settings')">Настройки</button> -->
     <form action="/katy-mode/logout" method="POST" style="margin-top:20px;">
@@ -29,17 +31,27 @@
 </div>
 
 <script>
-// Функция подгрузки модуля
+/* =========================
+   Функция подгрузки модуля
+   ========================= */
 function loadModule(name) {
     fetch(`/katy-mode/module/${name}`)
-    .then(r => r.text())
-    .then(html => {
-        document.getElementById('content').innerHTML = html;
-        initForms(); // инициализируем формы после подгрузки
-    });
+        .then(r => r.text())
+        .then(html => {
+            document.getElementById('content').innerHTML = html;
+
+            if (name === 'news') {
+                initNewsModule(); // инициализация всех функций новостей
+            }
+
+            initForms(); // инициализация других форм (создание новости)
+        });
 }
 
-// Инициализация форм после подгрузки модуля
+
+/* =========================
+   Инициализация формы создания новости
+   ========================= */
 function initForms() {
     const form = document.querySelector('#create-news-form');
     if (form) {
@@ -55,7 +67,6 @@ function initForms() {
             .then(msg => {
                 document.getElementById('create-news-result').innerHTML = `<p style="color:green;">${msg}</p>`;
                 this.reset();
-                console.log("Новость успешно создана!");
             })
             .catch(err => {
                 document.getElementById('create-news-result').innerHTML = `<p style="color:red;">Ошибка: ${err}</p>`;
@@ -65,9 +76,138 @@ function initForms() {
     }
 }
 
-// Загружаем по умолчанию пустой контент
+/* =========================
+   Инициализация модуля новостей
+   ========================= */
+function initNewsModule() {
 
+    const searchInput = document.getElementById('news-search-input');
+    const allNews = document.getElementById('news-all');
+    const searchResults = document.getElementById('news-search-results');
+
+    /* -------------------------
+       Поиск новостей
+       ------------------------- */
+    if(searchInput) {
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value.toLowerCase().trim();
+
+            if(query === '') {
+                searchResults.style.display = 'none';
+                allNews.style.display = 'flex';
+                searchResults.innerHTML = '';
+                return;
+            }
+
+            const matches = [];
+            allNews.querySelectorAll('.news-card').forEach(card => {
+                const title = card.querySelector('h2').textContent.toLowerCase();
+                const intro = card.querySelector('p').textContent.toLowerCase();
+                if(title.includes(query) || intro.includes(query)) {
+                    matches.push(card.outerHTML);
+                }
+            });
+
+            searchResults.innerHTML = matches.join('');
+            searchResults.style.display = matches.length > 0 ? 'flex' : 'none';
+            allNews.style.display = 'none';
+
+            // навесить кнопки на результаты поиска
+            initNewsButtons(searchResults);
+        });
+    }
+
+    /* -------------------------
+       Навесить кнопки редактирования и удаления на основной список
+       ------------------------- */
+    initNewsButtons(allNews);
+}
+
+/* =========================
+   Инициализация кнопок редактирования и удаления
+   на заданном контейнере
+   ========================= */
+function initNewsButtons(container) {
+    // редактирование с подсветкой одной карточки
+container.querySelectorAll(".edit-btn").forEach(btn => {
+    btn.addEventListener("click", e => {
+        const id = e.target.dataset.id;
+        const formEl = document.getElementById("edit-" + id);
+        const card = document.getElementById("article-" + id);
+
+        const isVisible = formEl.style.display === "block";
+
+        // закрываем все остальные карточки
+        container.querySelectorAll(".edit-form").forEach(f => f.style.display = "none");
+        container.querySelectorAll(".news-card").forEach(c => c.classList.remove("editing"));
+
+        // если форма была закрыта, открываем текущую
+        if(!isVisible){
+            formEl.style.display = "block";
+            card.classList.add("editing");
+        }
+        // если была открыта — она уже закрылась выше
+    });
+});
+
+    // сохранение новости
+    container.querySelectorAll(".edit-form form").forEach(form => {
+        form.addEventListener("submit", e => {
+            e.preventDefault();
+            const id = e.target.dataset.id;
+            const data = new FormData(e.target);
+
+            fetch(`/katy-mode/api/update-news/${id}`, {
+                method: "POST",
+                body: data
+            })
+            .then(r => r.json())
+            .then(res => {
+                if(res.status === "success"){
+                    alert("Новость обновлена");
+                    const card = document.getElementById("article-" + id);
+                    card.querySelector("h2").textContent = data.get("title");
+                    card.querySelector("p").textContent = data.get("intro");
+                } else {
+                    alert("Ошибка обновления");
+                }
+            })
+            .catch(err => {
+                alert("Ошибка запроса: " + err);
+                console.error(err);
+            });
+        });
+    });
+
+    // удаление новости
+    container.querySelectorAll(".delete-btn").forEach(btn => {
+        btn.addEventListener("click", async e => {
+            const id = e.target.dataset.id;
+            if(!confirm("Удалить новость?")) return;
+            try {
+                const response = await fetch(`/katy-mode/api/delete-news/${id}`, { method: "POST" });
+                const res = await response.json();
+                if(res.status === "deleted"){
+                    const card = document.getElementById("article-" + id);
+                    if(card) card.remove();
+                    // удаляем из контейнера, если это результаты поиска
+                    e.target.closest(".news-card")?.remove();
+                } else {
+                    alert("Ошибка удаления: " + (res.message || "Неизвестная ошибка"));
+                }
+            } catch(err) {
+                alert("Ошибка запроса: " + err);
+                console.error(err);
+            }
+        });
+    });
+}
 </script>
+
+
+
+
+
 <img src="/static/images/Паттерн.png" class="corner-image" alt="">
 </body>
 </html>

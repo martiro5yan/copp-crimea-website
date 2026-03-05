@@ -1,33 +1,45 @@
-{% extends 'base.html' %}
-{% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/news.css') }}">
-{% endblock %}
-
-{% block title %}Новости{% endblock %}
-
-{% block body %}
-<h1 class="page-title">Новости ЦОПП Республики Крым</h1>
-
-<div class="news-grid">
-    {% for article in news %}
-    <a href="{{ url_for('news_detail', id=article.id) }}" class="news-card-link">
-        <div class="news-card">
-
-            {% if article.preview_image %}
-            <div class="news-image">
-                <img src="{{ url_for('static', filename=article.preview_image) }}" alt="">
-            </div>
-            {% endif %}
-
-            <div class="news-content">
-                <h2>{{ article.title }}</h2>
-                <p class="news-intro">{{ article.intro }}</p>
-            
-            </div>
-            <p class="news-date">{{ article.date.strftime('%d.%m.%Y') }}</p>
-        </div>
-    </a>
-    {% endfor %}
+<div class="news-search">
+    <input type="text" id="news-search-input" placeholder="Поиск новости по заголовку">
 </div>
 
-{% endblock %}
+<!-- Блок с результатами поиска -->
+<div id="news-search-results" class="news-grid" style="display:none;"></div>
+
+<!-- Список всех новостей -->
+<div id="news-all" class="news-grid">
+{% for article in news %}
+<div class="news-card" id="article-{{ article.id }}">
+    {# закомментированная картинка #}
+    {# {% if article.preview_image %}
+    <!-- <div class="news-image">
+        <img src="{{ url_for('static', filename=article.preview_image) }}">
+    </div> -->
+    {% endif %} #}
+
+    <div class="news-content">
+        <h2>{{ article.title }}</h2>
+        <p>{{ article.intro }}</p>
+        <p class="news-date">{{ article.date.strftime('%d.%m.%Y') }}</p>
+    </div>
+
+    <div class="news-actions">
+        <button class="edit-btn" data-id="{{ article.id }}">Редактировать</button>
+        <button class="delete-btn" data-id="{{ article.id }}">Удалить</button>
+    </div>
+
+    <div class="edit-form" id="edit-{{ article.id }}">
+        <form data-id="{{ article.id }}">
+            <h4>Заголовок</h4>
+            <input name="title" value="{{ article.title }}">
+            <h4>Краткое описание</h4>
+            <textarea name="intro">{{ article.intro }}</textarea>
+            <h4>Текст статьи</h4>
+            <textarea name="text">{{ article.text }}</textarea>
+            <h4>Превью</h4>
+            <input type="file" name="preview_image">
+            <button type="submit" class="save-btn">Сохранить</button>
+        </form>
+    </div>
+</div>
+{% endfor %}
+</div>

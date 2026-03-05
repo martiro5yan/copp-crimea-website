@@ -4,7 +4,7 @@ from functools import wraps
 from models import db, Article, ArticleImage
 import os, uuid
 from werkzeug.utils import secure_filename
-
+from flask import jsonify
 # Разрешённые расширения и папка для загрузки
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'static', 'uploads')
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -119,6 +119,56 @@ def module_news():
     from models import Article
     articles = Article.query.order_by(Article.date.desc()).all()
     return render_template("modules/news.html", news=articles)
+
+# =========================
+# API редактирования новости
+# =========================
+
+@katy_bp.route("/api/update-news/<int:id>", methods=["POST"])
+@login_required
+def update_news(id):
+
+    article = Article.query.get_or_404(id)
+
+    article.title = request.form.get("title")
+    article.intro = request.form.get("intro")
+    article.text = request.form.get("text")
+
+    preview = request.files.get("preview_image")
+
+    if preview and allowed_file(preview.filename):
+
+        filename = secure_filename(preview.filename)
+        unique_name = f"{uuid.uuid4()}_{filename}"
+
+        preview.save(os.path.join(UPLOAD_FOLDER, unique_name))
+
+        article.preview_image = f"uploads/{unique_name}"
+
+    db.session.commit()
+
+    return {"status": "success"}
+
+# =========================
+# Удаление новости
+# =========================
+@katy_bp.route('/api/delete-news/<int:id>', methods=['POST'])
+@login_required
+def delete_news(id):
+
+    article = Article.query.get(id)
+    if not article:
+        return jsonify({'status':'error','message':'Not found'}), 404
+
+    try:
+        # Удаляем все картинки, связанные с этой статьей
+        ArticleImage.query.filter_by(article_id=article.id).delete()
+        db.session.delete(article)
+        db.session.commit()
+        return jsonify({'status':'deleted'})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'status':'error','message': str(e)}), 500
 # --------------------------
 # Выход
 # --------------------------
